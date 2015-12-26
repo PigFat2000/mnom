@@ -1,0 +1,18 @@
+<script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+<body onload="init();">
+  <canvas id="demoCanvas" width="500" height="300"></canvas>
+</body>
+<script>
+  function init() {
+    var stage = new createjs.Stage("demoCanvas");
+    var rect = new createjs.Shape();
+	rect.graphics.beginFill("DeepSkyBlue").drawRect(0, 0, 50, 50);
+	rect.x = 100;
+	rect.y = 100;
+	stage.addChild(rect);
+	stage.update();
+  }
+  function (evt){
+
+  }
+</script>
