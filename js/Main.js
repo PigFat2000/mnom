@@ -1,16 +1,20 @@
- function init() {
- 	canvas = document.getElementById('mnomCanvas');
+
+var canvas;
+var stage;
+var i=10;
+
+function init() {
+ 	
+	canvas = document.getElementById('mnomCanvas');
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
-    var stage = new createjs.Stage("mnomCanvas");
-    var rect = new createjs.Shape();
-	rect.graphics.beginFill("DeepSkyBlue").drawRect(-50, -50, 100, 100);
-	rect.x = canvas.width/2;
-	rect.y = canvas.height/2;
-	stage.addChild(rect);
-	var p = poly(canvas.width/2, canvas.height/2, 4, 100, "#FFCCFF");
-	stage.addChild(p);
+	
+	stage = new createjs.Stage("mnomCanvas");
+	gen(i);
+	
 	stage.update();
+	
+	
   }
 function poly (x,y,n,size, color) {
 	var polygon = new createjs.Shape();
@@ -24,8 +28,36 @@ function poly (x,y,n,size, color) {
 	{
 		polygon.graphics.moveTo(-size/2, 0).lineTo(size/2, 0).lineTo(size/2, size).lineTo(-size/2, size).lineTo(-size/2, 0);
 	}
-	
+	if (n == 5)
+	{
+		
+		polygon.graphics.moveTo(-size/3.2, 0).lineTo(size/3.2, 0).lineTo(size/3.5+size/3, size/2).lineTo(0, size/3.5+size/1.5).lineTo(-size/3-size/3.5, size/2).lineTo(-size/3.2, 0);
+	}
+	if (n == 6)
+	{
+		polygon.graphics.moveTo(-size/3.5, 0).lineTo(size/3.5, 0).lineTo(size/2, size/2).lineTo(size/3.5, size).lineTo(-size/3.5,size).lineTo(-size/2, size/2).lineTo(-size/3.5, 0);
+	}
 	polygon.x = x;
 	polygon.y = y;
 	return polygon;
+}
+
+function gen (i){
+	var shape = [];
+	var x1, y1, n1, size1, color1;
+	
+	for (var b = 0; b < i; b++) {
+		x1=Math.floor(Math.random()*canvas.width);
+		y1=Math.floor(Math.random()*canvas.height);
+		n1=Math.floor(Math.random()*(7-3))+3;
+		size1=Math.floor(Math.random()*100);
+		color1 = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+		var p = poly(x1, y1, n1, size1, color1);
+		shape[b]=p;
+		console.log(n1);
+		console.log(color1);
+		stage.addChild(shape[b]);
+	};
+	stage.update();
+	
 }
