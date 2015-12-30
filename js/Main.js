@@ -1,7 +1,7 @@
 
 var canvas;
 var stage;
-var i=10;
+var i = 10;
 var shape = [];
 var circle;
 function init() {
@@ -15,25 +15,20 @@ function init() {
 	createjs.Ticker.addEventListener("tick", tick);
 	gen(i);
 
-	//var pt = objA.localToLocal(posX, posY, );
-	//console.log(pt.x, pt.y);
-	
-
 	circle = new createjs.Shape();
-	
-	circle.graphics.setStrokeStyle(5).beginStroke("#000000").beginFill("#FF0000").drawCircle(0, 0, 30);
-	circle.x=Math.floor(Math.random()*canvas.width);
+		circle.graphics.setStrokeStyle(5).beginStroke("#000000").beginFill("#FF0000").drawCircle(0, 0, 30);
+		circle.x=Math.floor(Math.random()*canvas.width);
 		if(circle.x<50) 
 			circle.x=circle.x+50;
 		if(circle.x>(canvas.width-50)) 
 			circle.x=circle.x-50;
-	circle.y=Math.floor(Math.random()*canvas.height);
+		circle.y=Math.floor(Math.random()*canvas.height);
 		if(circle.x<50)	
 			circle.x=circle.x+50;
 		if(circle.x>(canvas.height-50)) 	
 			circle.x=circle.x-50;
-	stage.addChild(circle);
-	console.log(circle.x,circle.y);
+		stage.addChild(circle);
+		console.log(circle.x,circle.y);
   }
 
 function tick() {mov(i);  stage.update();}
@@ -92,26 +87,49 @@ function gen (i){
 }
 function mov (i) {
 	for (var b = 0; b < i; b++) {
-		/*var g = Math.floor(Math.random()*255);
-		if (g<64) shape[b].y--;
+		var katX,katY,gip,sin,t;
+		katX=Math.abs(shape[b].x-circle.x);
+		katY=Math.abs(shape[b].y-circle.y);
+		gip=Math.sqrt(katX*katX+katY*katY);
+		sin=(gip/katY);
+		cos=(gip/katX);
+		if(katX!=0&&katY!=0){
+			if(circle.x<shape[b].x)
+				shape[b].x-=80/shape[b].size*sin;
+			if(circle.x>shape[b].x)
+				shape[b].x+=80/shape[b].size*sin;
+			if (circle.y<shape[b].y)
+				shape[b].y-=80/shape[b].size*cos;
+			if (circle.y>shape[b].y)
+				shape[b].y+=80/shape[b].size*cos;
+		}
 		else{
-			if (g<128) shape[b].y++;
-			else{
-				if (g<192) shape[b].x++;
-				else{
-					if (g<256) shape[b].x--;
-				}
-			}
-		}*/
-		if(circle.x<shape[b].x)
-			shape[b].x-=80/shape[b].size;
-		if(circle.x>shape[b].x)
-			shape[b].x+=80/shape[b].size;
-		if (circle.y<shape[b].y)
-			shape[b].y-=80/shape[b].size;
-		if (circle.y>shape[b].y)
-			shape[b].y+=80/shape[b].size;
-		//if (circle.y==shape[b].y&&circle.x==shape[b].x)
+			if(circle.x<shape[b].x)
+				shape[b].x-=80/shape[b].size;
+			if(circle.x>shape[b].x)
+				shape[b].x+=80/shape[b].size;
+			if (circle.y<shape[b].y)
+				shape[b].y-=80/shape[b].size;
+			if (circle.y>shape[b].y)
+				shape[b].y+=80/shape[b].size;
+		}
+		var pt = shape[b].localToLocal(circle.x, circle.y, circle);
+		console.log(pt.x, pt.y);
+		if(pt>0){
+			circle.graphics.setStrokeStyle(5).beginStroke("#000000").beginFill("#FF0000").drawCircle(0, 0, 30);
+			circle.x=Math.floor(Math.random()*canvas.width);
+			if(circle.x<50) 
+				circle.x=circle.x+50;
+			if(circle.x>(canvas.width-50)) 
+				circle.x=circle.x-50;
+			circle.y=Math.floor(Math.random()*canvas.height);
+			if(circle.x<50)	
+				circle.x=circle.x+50;
+			if(circle.x>(canvas.height-50)) 	
+				circle.x=circle.x-50;
+			stage.addChild(circle);
+			console.log(circle.x,circle.y);
+			stage.update();
+		}
 	}
-
 }
